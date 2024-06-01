@@ -1,23 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+
+import { greeting, user } from "./data";
+import LabelInput from "./shared/LabelInput";
 
 function App() {
+  const [formFields, setFormFields] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+
+  const handleFormFieldChange = (e) => {
+    const { name, value } = e.target;
+    setFormFields((prevFormFields) => ({ ...prevFormFields, [name]: value }));
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <h1>
+        {greeting} {user}
+      </h1>
+      <form>
+        <LabelInput
+          id="firstName"
+          value={formFields.firstName}
+          handleInputChange={{ handleFormFieldChange }}
         >
-          Learn React
-        </a>
-      </header>
+          First Name
+        </LabelInput>
+        <LabelInput
+          id="lastName"
+          value={formFields.lastName}
+          handleInputChange={{ handleFormFieldChange }}
+        >
+          Last Name
+        </LabelInput>
+        <LabelInput
+          id="email"
+          value={formFields.email}
+          handleInputChange={{ handleFormFieldChange }}
+        >
+          Email
+        </LabelInput>
+        <LabelInput
+          id="password"
+          value={formFields.password}
+          handleInputChange={{ handleFormFieldChange }}
+        >
+          Password
+        </LabelInput>
+      </form>
     </div>
   );
 }
