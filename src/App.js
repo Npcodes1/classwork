@@ -1,56 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { greeting, user } from "./data";
-import LabelInput from "./shared/LabelInput";
+import { greeting, user, users } from "./data";
 
 function App() {
-  const [formFields, setFormFields] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-  });
+  const [userId, setUserId] = useState(1);
 
-  const handleFormFieldChange = (e) => {
-    const { name, value } = e.target;
-    setFormFields((prevFormFields) => ({ ...prevFormFields, [name]: value }));
-  };
+  useEffect(() => {
+    const currentUser = users.find((user) => user.id === userId);
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    console.log(currentUser);
+  }, [userId]);
 
   return (
     <div className="App">
       <h1>
         {greeting} {user}
       </h1>
-      <form>
-        <LabelInput
-          id="firstName"
-          value={formFields.firstName}
-          handleInputChange={{ handleFormFieldChange }}
-        >
-          First Name
-        </LabelInput>
-        <LabelInput
-          id="lastName"
-          value={formFields.lastName}
-          handleInputChange={{ handleFormFieldChange }}
-        >
-          Last Name
-        </LabelInput>
-        <LabelInput
-          id="email"
-          value={formFields.email}
-          handleInputChange={{ handleFormFieldChange }}
-        >
-          Email
-        </LabelInput>
-        <LabelInput
-          id="password"
-          value={formFields.password}
-          handleInputChange={{ handleFormFieldChange }}
-        >
-          Password
-        </LabelInput>
-      </form>
+      <button onClick={() => setUserId(1)}>User 1</button>
+      <button onClick={() => setUserId(2)}>User 2</button>
     </div>
   );
 }
